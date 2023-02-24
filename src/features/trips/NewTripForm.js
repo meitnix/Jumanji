@@ -17,6 +17,7 @@ const NewTripForm = ({ users }) => {
 
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
+    const [price, setPrice] = useState('')
     const [userId, setUserId] = useState(users[0].id)
 
     useEffect(() => {
@@ -30,14 +31,15 @@ const NewTripForm = ({ users }) => {
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
+    const onPriceChanged = e => setPrice(e.target.value)
     const onUserIdChanged = e => setUserId(e.target.value)
 
-    const canSave = [title, text, userId].every(Boolean) && !isLoading
+    const canSave = [title, text, price, userId].every(Boolean) && !isLoading
 
     const onSaveTripClicked = async (e) => {
         e.preventDefault()
         if (canSave) {
-            await addNewTrip({ user: userId, title, text })
+            await addNewTrip({ user: userId, title, text, price })
         }
     }
 
@@ -53,6 +55,7 @@ const NewTripForm = ({ users }) => {
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
     const validTextClass = !text ? "form__input--incomplete" : ''
+    const validPriceClass = !price ? "form__input--incomplete" : ''
 
     const content = (
         <>
@@ -92,6 +95,20 @@ const NewTripForm = ({ users }) => {
                     value={text}
                     onChange={onTextChanged}
                 />
+
+                <label className="form__label" htmlFor="price">
+                    Price:</label>
+                <input
+                    type='number'
+                    min='0.001'
+                    step={0.001}
+                    className={`form__input form__input--price ${validPriceClass}`}
+                    id="price"
+                    name="price"
+                    value={price}
+                    onChange={onPriceChanged}
+                />
+
 
                 <label className="form__label form__checkbox-container" htmlFor="username">
                     ASSIGNED TO:</label>

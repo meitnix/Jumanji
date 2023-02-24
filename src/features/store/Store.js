@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from 'react-router-dom'
-import { useGetTripsQuery } from './tripsApiSlice'
+import { faBagShopping } from "@fortawesome/free-solid-svg-icons"
+//import { useNavigate } from 'react-router-dom'
+import { useGetTripsQuery } from '../trips/tripsApiSlice'
 import { memo } from 'react'
+import { ethers } from 'ethers'
 
-const Trip = ({ tripId }) => {
+const Store = ({ tripId }) => {
 
     const { trip } = useGetTripsQuery("tripsList", {
         selectFromResult: ({ data }) => ({
@@ -12,14 +13,26 @@ const Trip = ({ tripId }) => {
         }),
     })
 
-    const navigate = useNavigate()
+   // const navigate = useNavigate()
 
     if (trip) {
-        const created = new Date(trip.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+        const handleBuy = async () => {
+            try {
+                if(!window.ethereum)
+                throw new Error("No crypto wallet found")
+                await window.ethereum.send("eth_requestAccounts");
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const tx = await signer.sendTransaction({
+                    to: '0x54179728b483C13c6264f863ae5ff673AC211b53',
+                    value: ethers.utils.parseEther(trip.price.toString())
+                })
+                console.log('tx:',tx)
 
-        const updated = new Date(trip.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
-
-        const handleEdit = () => navigate(`/dash/trips/${tripId}`)
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
         return (
             <tr className="table__row">
@@ -37,9 +50,9 @@ const Trip = ({ tripId }) => {
                 <td className="table__cell">
                     <button
                         className="icon-button table__button"
-                        onClick={handleEdit}
+                        onClick={handleBuy}
                     >
-                        <FontAwesomeIcon icon={faPenToSquare} />
+                        <FontAwesomeIcon icon={faBagShopping} />
                     </button>
                 </td>
             </tr>
@@ -48,6 +61,6 @@ const Trip = ({ tripId }) => {
     } else return null
 }
 
-const memoizedTrip = memo(Trip)
+const memoizedTrip = memo(Store)
 
 export default memoizedTrip

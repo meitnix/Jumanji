@@ -15,6 +15,8 @@ import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
 import { ROLES } from './config/roles'
 import useTitle from './hooks/useTitle';
+//import { useMetaMask } from "metamask-react";
+import StoreTripsList from './features/store/StoreTripsList'
 
 function App() {
   useTitle('Jumanji Adventures')
@@ -33,7 +35,9 @@ function App() {
               <Route path="dash" element={<DashLayout />}>
 
                 <Route index element={<Welcome />} />
-
+                <Route path="store">
+                    <Route index element={<StoreTripsList />} />
+                </Route>
                 <Route element={<RequireAuth allowedRoles={[ROLES.Manager, ROLES.Admin]} />}>
                   <Route path="users">
                     <Route index element={<UsersList />} />

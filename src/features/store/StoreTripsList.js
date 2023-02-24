@@ -1,9 +1,9 @@
-import { useGetTripsQuery } from "./tripsApiSlice"
-import Trip from "./Trip"
+import { useGetTripsQuery } from "../trips/tripsApiSlice"
+import Store from "./Store"
 import useAuth from "../../hooks/useAuth"
 import PulseLoader from "react-spinners/PulseLoader"
 
-const TripsList = () => {
+const StoreTripsList = () => {
 
     const { username, isManager, isAdmin } = useAuth()
 
@@ -37,7 +37,7 @@ const TripsList = () => {
             filteredIds = ids.filter(tripId => entities[tripId].username === username)
         }
 
-        const tableContent = ids?.length && filteredIds.map(tripId => <Trip key={tripId} tripId={tripId} />)
+        const tableContent = ids?.length && filteredIds.map(tripId => <Store key={tripId} tripId={tripId} />)
 
         content = (
             <table className="table table--trips">
@@ -61,4 +61,4 @@ const TripsList = () => {
 
     return content
 }
-export default TripsList
+export default StoreTripsList

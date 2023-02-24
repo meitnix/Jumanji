@@ -12,11 +12,13 @@ const Welcome = () => {
 
             <p>{today}</p>
 
-            <h1>Hello! {username} Welcome to the Jungle!</h1>
+            <h1>Hello {username}! <br/> Welcome to the Jungle!</h1>
 
             <p><Link to="/dash/trips">View Trips</Link></p>
 
             <p><Link to="/dash/trips/new">New Trips</Link></p>
+
+            <p><Link to="/dash/store">View Store</Link></p>
 
             {(isAdmin || isManager) && <p><Link to="/dash/users">View User Settings</Link></p>}
 

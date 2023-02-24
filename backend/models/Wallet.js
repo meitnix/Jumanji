@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose)
 
-const tripSchema = new mongoose.Schema(
+const walletSchema = new mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -12,28 +12,20 @@ const tripSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        text: {
+        address: {
             type: String,
             required: true
         },
-        price: {
-            type: Number,
-            required: true
-        },
-        completed: {
-            type: Boolean,
-            default: false
-        }
     },
     {
         timestamps: true
     }
 )
 
-tripSchema.plugin(AutoIncrement, {
-    inc_field: 'ticket',
-    id: 'ticketNums',
+walletSchema.plugin(AutoIncrement, {
+    inc_field: 'anum',
+    id: 'addressNums',
     start_seq: 500
 })
 
-module.exports = mongoose.model('Trip', tripSchema)
+module.exports = mongoose.model('Wallet', walletSchema)

@@ -27,10 +27,10 @@ const getAllTrips = async (req, res) => {
 // @route POST /trips
 // @access Private
 const createNewTrip = async (req, res) => {
-    const { user, title, text } = req.body
+    const { user, title, text, price } = req.body
 
     // Confirm data
-    if (!user || !title || !text) {
+    if (!user || !title || !text || !price) {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
@@ -42,7 +42,7 @@ const createNewTrip = async (req, res) => {
     }
 
     // Create and store the new user 
-    const trip = await Trip.create({ user, title, text })
+    const trip = await Trip.create({ user, title, text, price })
 
     if (trip) { // Created 
         return res.status(201).json({ message: 'New trip created' })

@@ -152,7 +152,7 @@ a:focus-visible {
 }
 
 .dash-header__container--small {
-  max-width: 800px;
+  max-width: 100%;
 }
 
 .dash-header__nav {
@@ -199,7 +199,7 @@ tr {
   font-size: 1rem;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   color: var(--TABLE-COLOR);
   gap: 0.1em;
 }
@@ -235,8 +235,7 @@ tr {
 
 /* ||  TRIP */
 
-.trip__created,
-.trip__updated,
+.trip__text,
 .trip__username {
   display: none;
 }
@@ -251,6 +250,22 @@ tr {
 
 .trip__status--completed {
   color: var(--STATUS-COMPLETE);
+}
+
+/* ||  TRIP */
+
+.wallet__created,
+.wallet__updated,
+.wallet__username {
+  display: none;
+}
+
+.wallet__status {
+  font-weight: bold;
+}
+
+.wallet__status--open {
+  color: var(--STATUS-OPEN);
 }
 
 
@@ -368,7 +383,14 @@ tr {
 
   .trip__created,
   .trip__updated,
+  .trip__price,
+  .trip__text,
   .trip__username {
+    display: block
+  }
+  .wallet__created,
+  .wallet__updated,
+  .wallet__username {
     display: block
   }
 
